@@ -214,7 +214,7 @@ class ImgBlock extends React.Component {
     this.imgCanvas = document.createElement('canvas');
     this.imgCanvas.width = this.props.width;
     this.imgCanvas.height = this.props.height;
-    this.imgName = 'Instorama-' + this.props.num;
+    this.imgName = 'Instorama-' + this.props.name;
     this.state = {
       context: null
     }
@@ -237,7 +237,7 @@ class ImgBlock extends React.Component {
   }
   render() {
     return (
-      <img ref={this.imgRef} alt={this.imgName} />
+      <img ref={this.imgRef} alt={this.imgName} title={this.imgName} />
     );
   }
 }
@@ -254,7 +254,7 @@ function ImgResults(props) {
       results.push(
         <li key={b}>
           <ImgBlock
-            num={b + 1}
+            name={b + 1}
             img={props.imgElement}
             width={props.imgWidth}
             height={props.imgHeight}
@@ -266,6 +266,23 @@ function ImgResults(props) {
         </li>
       );
     }
+
+    // Also add the full-pano preview in case they want it.
+    const name = 'Full-size preview';
+    results.push(
+      <li key={props.boxCount}>
+        <ImgBlock
+            name={name}
+            img={props.imgElement}
+            width={props.imgWidth}
+            height={props.imgHeight}
+            cropX={0}
+            cropY={0}
+            type={props.imgType}
+          />
+          <div className='counter'>{name}</div>
+        </li>
+    );
     return (
       <div className='result'>
         <ul>
